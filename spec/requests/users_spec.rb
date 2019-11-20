@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 describe "Users API", type: :request do
-  it "gets a list of the Users /GET" do
+  it "gets a list of the all Users /GET" do
     # Create a new cat in the Test Database (not the same one as development)
     User.create(name: 'Patsy', profile_pic: "https://stroseschool.stroselions.net/wp-content/uploads/2018/04/profile-blank-reva.png", project_link: "https://github.com/explore", focus: "All things Elixir")
+    User.create(name: 'Bob', profile_pic: "https://stroseschool.stroselions.net/wp-content/uploads/2018/04/profile-blank-reva.png", project_link: "https://github.com/explore", focus: "All things Elixir")
 
     # Make a request to the API
     get '/users'
@@ -15,10 +16,10 @@ describe "Users API", type: :request do
     expect(response).to have_http_status(:ok)
 
     # Assure that we got one result back as expected
-    expect(json.length).to eq 1
+    expect(json.length).to eq 2
   end
 
-  it "creates a User" do
+  it "creates a User /POST" do
     # The params we are going to send with the request
     user_params = {
         user: {
@@ -43,7 +44,6 @@ describe "Users API", type: :request do
   end
 
   it "doesn't create a user without a name" do
-
       user_params = {
           user: {
               profile_pic: "https://stroseschool.stroselions.net/wp-content/uploads/2018/04/profile-blank-reva.png",
